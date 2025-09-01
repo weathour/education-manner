@@ -19,8 +19,7 @@
 - [使用指南](#使用指南)
 - [常见问题](#常见问题)
 - [开发与构建](#开发与构建)
-- [Roadmap](#roadmap)
-- [许可证](#许可证)
+
 
 ---
 
@@ -96,8 +95,8 @@ project/
 
 ```bash
 # 1. 克隆仓库
-git clone https://your.repo.url.git
-cd project
+git clone https://github.com/weathour/education-manner
+cd education-manner
 
 # 2. 安装依赖
 pip install -r requirements.txt
@@ -319,22 +318,4 @@ http://127.0.0.1:5000
 - 前端：模块化函数 + 语义化命名
 - 后端：分层（路由/服务/存储）与单元测试
 
----
 
-## Roadmap
-
-- [ ] 拖拽排序章节与任务
-- [ ] 批量为学生分配科目
-- [ ] 导入/导出（CSV/JSON）
-- [ ] 多用户/权限（教师/家长/学生）
-- [ ] 富文本与附件支持（步骤/任务说明）
-- [ ] 国际化 i18n
-- [ ] 渲染性能优化（虚拟列表）
-
----
-
-## 许可证
-
-MIT License
-
-你可以自由使用、修改与分发本项目。若在教学或家庭场景落地，欢迎反馈实践经验与改进建议！🎓
