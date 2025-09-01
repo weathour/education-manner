@@ -890,7 +890,366 @@
         ]
       }
     ]
-  }
+  },
+  {
+  "id": "paper_cacc_ltv",
+  "name": "自适应CACC鲁棒控制与稳定性分析论文",
+  "icon": "📄",
+  "color": "#4A90E2",
+  "description": "一份完整的论文撰写与审核任务清单，涵盖从引言到结论的所有章节，包括理论证明、仿真验证、图表与引用需求。",
+  "levels": [
+    {
+      "id": "level_submission",
+      "name": "期刊投稿最终版",
+      "chapters": [
+        {
+          "id": "chapter_01_introduction",
+          "name": "第一章：引言 (Introduction)",
+          "description": "本章旨在建立研究背景，明确问题的重要性与研究缺口，并清晰地陈述本文的核心贡献与整体结构。",
+          "tasks": [
+            {
+              "id": "task_01_01_background",
+              "name": "建立研究背景与动机",
+              "type": "writing",
+              "difficulty": 2,
+              "estimatedTime": 999,
+              "steps": [
+                "定义并介绍协作自适应巡航控制(CACC)的基本概念及其在提升交通效率与安全方面的潜力。",
+                "阐述车联网(V2X)通信，特别是V2V通信，作为实现CACC的关键技术。",
+                "指出V2V通信在真实环境中存在的不确定性，如丢包、时延和干扰，是CACC实际部署中的核心挑战。",
+                "引用相关行业报告或综述文献，支撑CACC和V2X技术的重要性。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_01_02_gap_analysis",
+              "name": "阐述研究问题与现有工作的局限性",
+              "type": "writing",
+              "difficulty": 3,
+              "estimatedTime": 999,
+              "steps": [
+                "回顾现有CACC研究大多基于理想通信的LTI（线性时不变）模型，分析其在时变通信环境下的局限性。",
+                "讨论固定头距（fixed headway）策略在安全与效率之间的静态权衡，无法适应动态变化的通信质量。",
+                "分析现有自适应方法（如基于规则或简单学习的方法）缺乏严格的理论稳定性保证。",
+                "明确指出研究缺口：缺乏一个既能自适应调整头距以应对V2V不确定性，又具备严格数学证明（特别是针对LTV系统）的CACC框架。",
+                "引用Ploeg等人的LTI模型作为基准，并引用其他自适应但缺乏证明的CACC研究作为对比。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_01_03_contributions",
+              "name": "陈述本文的核心贡献与论文结构",
+              "type": "writing",
+              "difficulty": 2,
+              "estimatedTime": 999,
+              "steps": [
+                "贡献一：提出一个三层自适应CACC框架，整合了通道预测、鲁棒映射和顺滑调度。",
+                "贡献二：设计一个基于GRU的通道质量预测器，以实现对未来通信性能的前瞻性评估。",
+                "贡献三：首次为该自适应框架建立了LTV（线性时变）系统模型，并提供了严格的指数稳定性与弦稳定性证明。",
+                "贡献四：通过高保真度的联合仿真（SUMO+OMNeT++）验证了框架的有效性。",
+                "概述论文结构：第二章回顾相关工作，第三章介绍框架，第四章进行理论分析，第五章展示仿真结果，第六、七章进行讨论和总结。"
+              ],
+              "prerequisites": []
+            }
+          ]
+        },
+        {
+          "id": "chapter_02_system_model",
+          "name": "第二章：系统建模与问题描述",
+          "description": "本章旨在建立车辆纵向动力学模型、CACC控制器结构以及通信不确定性的数学描述，为后续的理论分析奠定基础。",
+          "tasks": [
+            {
+              "id": "task_02_01_vehicle_dynamics",
+              "name": "车辆纵向动力学与CACC控制律建模",
+              "type": "modeling",
+              "difficulty": 2,
+              "estimatedTime": 999,
+              "steps": [
+                "介绍车辆的纵向动力学模型，通常简化为一阶或二阶传递函数，包含执行器延迟 τ。",
+                "展示经典的CACC控制律（如Ploeg的设计），包含前馈项（利用前车加速度a_{i-1}）和反馈项（调节间距误差与相对速度）。",
+                "明确定义车队的状态变量，如间距误差 (spacing error)、相对速度等。",
+                "引用Ploeg, Naus等人的经典CACC建模文献。",
+                "【公式需求】：呈现车辆动力学传递函数 G(s) 和CACC控制律的完整形式。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_02_02_communication_model",
+              "name": "通信不确定性建模",
+              "type": "modeling",
+              "difficulty": 3,
+              "estimatedTime": 999,
+              "steps": [
+                "将V2V通信丢包抽象为有效数据接收率 γ_eff(t)，取值在[0, 1]之间，作为时变参数。",
+                "说明γ_eff(t)如何影响CACC控制律，通常是通过调制前馈增益，即有效增益为 γ_eff * K_a。",
+                "讨论该模型相对于简单Bernoulli丢包模型的优势，即能够反映信道的时变特性。",
+                "【图表需求】：绘制一张示意图，展示V2V通信丢包如何导致前车信息丢失。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_02_03_problem_formulation",
+              "name": "问题形式化描述",
+              "type": "writing",
+              "difficulty": 2,
+              "estimatedTime": 999,
+              "steps": [
+                "形式化地定义问题：如何在时变的V2V通信质量（由γ_eff(t)表征）下，动态调整期望头距h_cmd(t)，以保证车队的弦稳定性和行驶效率。",
+                "定义弦稳定性的数学标准，通常是扰动传递函数的H∞范数小于等于1。",
+                "定义行驶效率的衡量指标，如平均车头时距或道路吞吐量。"
+              ],
+              "prerequisites": []
+            }
+          ]
+        },
+        {
+          "id": "chapter_03_framework",
+          "name": "第三章：自适应CACC框架设计",
+          "description": "本章详细阐述所提出的三层自适应框架的每个模块：预测、映射和调度。",
+          "tasks": [
+            {
+              "id": "task_03_01_architecture",
+              "name": "框架总体架构设计",
+              "type": "design",
+              "difficulty": 2,
+              "estimatedTime": 999,
+              "steps": [
+                "描述三层架构的逻辑流：首先预测未来的通信质量，然后将其映射为最小安全头距，最后由调度器平滑地调整当前头距。",
+                "【图表需求】：绘制一张精美的框架总体架构图，清晰展示预测、映射、调度三个模块以及它们之间的数据流。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_03_02_prediction_module",
+              "name": "通道质量预测模块 (GRU-based)",
+              "type": "design",
+              "difficulty": 3,
+              "estimatedTime": 999,
+              "steps": [
+                "详细介绍选择GRU（门控循环单元）进行时间序列预测的原因（能够捕捉时间依赖性且计算效率高于LSTM）。",
+                "定义GRU模型的输入（历史通信质量序列）和输出（未来一段时间的γ_eff预测值）。",
+                "描述模型训练过程，包括数据集的生成（可来自OMNeT++仿真）、损失函数和优化器。",
+                "引用相关的深度学习和时间序列预测文献。",
+                "【图表需求】：绘制GRU单元的内部结构图。 可选：展示预测结果与真实值的对比图。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_03_03_mapping_module",
+              "name": "鲁棒稳定性映射模块",
+              "type": "design",
+              "difficulty": 3,
+              "estimatedTime": 999,
+              "steps": [
+                "推导或引用从γ_eff(t)到最小安全头距h_min(t)的映射关系。",
+                "解释该映射的物理意义：当通信质量下降时，系统需要更大的安全冗余（即更大的头距）来维持稳定性。",
+                "【公式需求】：明确给出h_min(t)的计算公式，例如 h_min(t) = 2τ / (1 + γ_eff(t) * K_a)。",
+                "【图表需求】：绘制一张h_min与γ_eff的函数关系图，直观展示其反比关系。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_03_04_scheduling_module",
+              "name": "平滑头距调度模块",
+              "type": "design",
+              "difficulty": 2,
+              "estimatedTime": 999,
+              "steps": [
+                "描述调度器的决策逻辑：确保当前指令头距h_cmd(t)始终大于等于h_min(t)。",
+                "引入关键的速率限制器（rate limiter），即 |h_dot_cmd(t)| ≤ L(t)。",
+                "解释该限制器的作用：防止头距变化过快，满足后续LTV稳定性证明中的慢时变条件。",
+                "【公式需求】：给出调度器的核心逻辑伪代码或表达式。"
+              ],
+              "prerequisites": []
+            }
+          ]
+        },
+        {
+          "id": "chapter_04_stability_analysis",
+          "name": "第四章：LTV系统稳定性分析",
+          "description": "本章是论文的理论核心，为提出的自适应框架提供严格的数学证明。",
+          "tasks": [
+            {
+              "id": "task_04_01_ltv_modeling",
+              "name": "车队误差动态的LTV建模",
+              "type": "theory",
+              "difficulty": 4,
+              "estimatedTime": 999,
+              "steps": [
+                "基于第二章的模型，推导车队误差状态（间距误差、速度差等）的微分方程。",
+                "将该微分方程写成标准的LTV系统形式：x_dot(t) = A(t)x(t) + B(t)u(t)。",
+                "【公式需求】：完整展示A(t)和B(t)矩阵的推导过程和最终形式（对应原文的Eq. 12, 13）。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_04_02_decomposition",
+              "name": "系统矩阵分解与扰动界定",
+              "type": "theory",
+              "difficulty": 3,
+              "estimatedTime": 999,
+              "steps": [
+                "将时变矩阵A(t)分解为“冻结时间”部分 A_frozen(t) 和“扰动”部分 ΔA(t)。",
+                "明确指出扰动项ΔA(t)来源于头距的变化率 h_dot_cmd(t)。",
+                "推导扰动项的范数上界：||ΔA(t)|| ≤ c(t) * |h_dot_cmd(t)|。",
+                "【公式需求】：给出A_frozen, ΔA, c(t) 的具体表达式。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_04_03_stability_proof",
+              "name": "指数稳定性与弦稳定性证明",
+              "type": "theory",
+              "difficulty": 5,
+              "estimatedTime": 999,
+              "steps": [
+                "步骤一：提出关键假设（Assumption 1），即当h_cmd ≥ h_min时，冻结系统A_frozen(t)是均匀指数稳定（UES）的。引用Coppel的经典LTV理论支撑此假设。",
+                "步骤二：陈述核心定理（Theorem 1），即在慢时变条件下，整个LTV系统是指数稳定的，且车队是弦稳定的。",
+                "步骤三（Part 1）：使用Lyapunov理论和Gronwall不等式，证明单个车辆的误差动态在扰动下是指数稳定的。引用Khalil的非线性系统理论。",
+                "步骤四（Part 2）：使用小增益定理（small-gain theorem），证明从前车到后车的误差传递函数的L2增益小于等于1，从而保证弦稳定性。引用Desoer的反馈系统理论。",
+                "【公式需求】：清晰展示Lyapunov函数 V(t,x)及其导数，Gronwall不等式的应用，以及L2增益的推导过程（对应原文Eq. 15等）。"
+              ],
+              "prerequisites": []
+            }
+          ]
+        },
+        {
+          "id": "chapter_05_simulation",
+          "name": "第五章：仿真验证与结果分析",
+          "description": "本章通过高保真度仿真来验证理论分析的正确性，并评估所提框架的实际性能。",
+          "tasks": [
+            {
+              "id": "task_05_01_setup",
+              "name": "仿真环境与参数设置",
+              "type": "experiment",
+              "difficulty": 3,
+              "estimatedTime": 999,
+              "steps": [
+                "详细描述联合仿真平台的搭建：SUMO（交通流）、OMNeT++（网络通信）和Plexe（车辆动力学）。",
+                "说明仿真的场景设置，如道路类型（高速公路）、车队规模、车辆参数等。",
+                "设置通信环境参数，如背景流量、干扰模型，以产生时变的V2V信道。",
+                "【图表需求】：绘制一张仿真平台架构图。【表格需求】：创建一个详细的仿真参数列表。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_05_02_scenarios",
+              "name": "基准方法与评估场景设计",
+              "type": "experiment",
+              "difficulty": 2,
+              "estimatedTime": 999,
+              "steps": [
+                "选择合适的基准（Baseline）方法进行对比，例如：1) 理想通信下的CACC；2) 采用固定保守头距的CACC；3) 标准ACC。",
+                "设计不同的通信质量场景，例如：好、中、差三种不同平均丢包率的场景。",
+                "设计动态事件，如前车紧急刹车，以测试系统的安全性能。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_05_03_results",
+              "name": "性能评估与结果分析",
+              "type": "analysis",
+              "difficulty": 4,
+              "estimatedTime": 999,
+              "steps": [
+                "评估安全性：绘制并分析在紧急刹车场景下，各车辆的最小间距，确保没有碰撞。",
+                "评估效率：计算并比较不同方法和场景下的平均车头时距、道路吞吐量。",
+                "评估舒适性：绘制车辆的加速度/加加速度（jerk）曲线，评估行驶的平顺性。",
+                "分析自适应头距的变化曲线，验证其是否与通信质量变化趋势一致。",
+                "【图表需求】：车辆间距-时间曲线图、速度-时间曲线图、加速度-时间曲线图、头距h_cmd-时间曲线图。",
+                "【表格需求】：汇总所有场景下的关键性能指标（KPIs），如平均速度、吞吐量、最小间距、平均加速度等，并进行对比。"
+              ],
+              "prerequisites": []
+            }
+          ]
+        },
+        {
+          "id": "chapter_06_discussion",
+          "name": "第六章：讨论",
+          "description": "本章深入解读研究结果的意义，分析本工作的局限性，并展望未来的研究方向。",
+          "tasks": [
+            {
+              "id": "task_06_01_interpretation",
+              "name": "研究结果的深入解读",
+              "type": "writing",
+              "difficulty": 3,
+              "estimatedTime": 999,
+              "steps": [
+                "将仿真结果与第四章的理论分析联系起来，解释为什么自适应框架能取得更好的性能。",
+                "讨论理论（如L(t)限制）在实际仿真中的体现和作用。",
+                "分析安全、效率和舒适性之间的权衡关系。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_06_02_limitations",
+              "name": "分析局限性与未来工作",
+              "type": "writing",
+              "difficulty": 2,
+              "estimatedTime": 999,
+              "steps": [
+                "承认研究的局限性，例如：仅基于仿真，未进行实车测试；假设车队是同质的；通信模型可以更精细。",
+                "提出具体的未来研究方向，例如：1) 扩展到V2I和车路协同场景；2) 考虑异构车队（不同动力学特性）；3) 进行硬件在环（HIL）或实车实验；4) 优化能源效率（Eco-CACC）。"
+              ],
+              "prerequisites": []
+            }
+          ]
+        },
+        {
+          "id": "chapter_07_conclusion",
+          "name": "第七章：结论",
+          "description": "本章对全文进行凝练总结，重申核心发现与贡献。",
+          "tasks": [
+            {
+              "id": "task_07_01_summary",
+              "name": "全文总结",
+              "type": "writing",
+              "difficulty": 1,
+              "estimatedTime": 999,
+              "steps": [
+                "简要重述所研究的问题、提出的自适应CACC框架、关键的理论发现以及仿真验证的主要结果。",
+                "用简洁的语言强调本文在解决V2V不确定性下CACC安全与效率权衡问题上的贡献。"
+              ],
+              "prerequisites": []
+            }
+          ]
+        },
+        {
+          "id": "chapter_08_ancillary",
+          "name": "附录内容：摘要、关键词与参考文献",
+          "description": "完成论文的摘要、关键词选择以及参考文献的整理和格式化。",
+          "tasks": [
+            {
+              "id": "task_08_01_abstract",
+              "name": "撰写摘要和关键词",
+              "type": "writing",
+              "difficulty": 2,
+              "estimatedTime": 999,
+              "steps": [
+                "撰写一段200-250词的精炼摘要，涵盖背景、方法、关键结果和结论。",
+                "选择5-7个能准确反映论文核心内容的关键词，如CACC, LTV Systems, V2V Communications, String Stability, Deep Learning。"
+              ],
+              "prerequisites": []
+            },
+            {
+              "id": "task_08_02_references",
+              "name": "整理和格式化参考文献",
+              "type": "utility",
+              "difficulty": 2,
+              "estimatedTime": 999,
+              "steps": [
+                "检查所有文内引用是否都在参考文献列表中，反之亦然。",
+                "使用文献管理工具（如Zotero, EndNote）统一管理。",
+                "根据目标期刊（如IEEE TITS）的格式要求，对参考文献列表进行精确格式化。"
+              ],
+              "prerequisites": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
 
   
       
