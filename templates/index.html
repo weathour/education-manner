@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习进度管理系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 学习进度管理系统</h1>
+            <p>管理你的学习进度</p>
+        </div>
+
+        <!-- 学生选择页面 -->
+        <div id="students-page" class="page active">
+            <div class="student-grid" id="student-grid">
+                <!-- 学生卡片将通过 JavaScript 动态生成 -->
+            </div>
+        </div>
+
+        <!-- 学生主面板 -->
+        <div id="student-dashboard" class="page">
+            <div class="student-header">
+                <div class="student-info">
+                    <span id="current-student-avatar">👦</span>
+                    <div>
+                        <h2 id="current-student-name">张小明</h2>
+                        <div class="overall-progress">
+                            <div>总体进度: <span id="overall-progress-text">0%</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="overall-progress-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="back-btn" onclick="showPage('students-page')">返回</button>
+            </div>
+            
+            <div class="subjects-section">
+                <div class="subjects-grid" id="subjects-grid">
+                    <!-- 学科卡片将通过 JavaScript 动态生成 -->
+                </div>
+
+                <div class="recent-activities">
+                    <h3>最近活动</h3>
+                    <div id="recent-activities-list">
+                        <!-- 最近活动将通过 JavaScript 动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 学科任务页面 -->
+        <div id="subject-tasks" class="page">
+            <div class="subject-header" id="subject-header">
+                <div>
+                    <h2 id="subject-title">🧮 数学 - 一年级</h2>
+                </div>
+                <button class="back-btn" onclick="backToStudentDashboard()">返回</button>
+            </div>
+
+            <div class="tasks-section">
+                <div id="chapters-container">
+                    <!-- 章节和任务将通过 JavaScript 动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 任务详情页面 -->
+        <div id="task-detail" class="page">
+            <div class="task-header-detail" id="task-header-detail">
+                <h2 id="task-detail-title">📋 数字比较大小</h2>
+                <div class="task-progress">
+                    <div>进度: <span id="task-progress-text">50%</span> (<span id="task-step-info">第2步/共4步</span>)</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="task-progress-bar" style="width: 50%"></div>
+                    </div>
+                </div>
+                <div class="task-meta">
+                    <span>⏱️ 预计用时: <span id="task-estimated-time">25分钟</span></span>
+                    <span>⭐ 难度: <span id="task-difficulty" class="stars">⭐⭐⭐</span></span>
+                </div>
+            </div>
+
+            <div class="steps-section">
+                <h3>学习步骤:</h3>
+                <div id="steps-container">
+                    <!-- 步骤将通过 JavaScript 动态生成 -->
+                </div>
+            </div>
+
+            <div class="task-bottom-actions">
+                <div>
+                    <button class="btn" onclick="saveProgress()">💾 保存进度</button>
+                    <button class="btn secondary" onclick="resetTask()">🔄 重置任务</button>
+                </div>
+                <button class="back-btn" onclick="backToSubjectTasks()">返回</button>
+            </div>
+        </div>
+
+        <!-- 管理面板 -->
+        <div id="admin-panel" class="page">
+            <div class="admin-header">
+                <h2>📊 管理面板</h2>
+                <button class="back-btn" onclick="showPage('students-page')">返回</button>
+            </div>
+            
+            <div class="admin-content">
+                <!-- 统计信息 -->
+                <div class="admin-section">
+                    <h3>📈 统计信息</h3>
+                    <div class="stats-grid" id="stats-grid">
+                        <!-- 统计信息动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 学生管理 -->
+                <div class="admin-section">
+                    <h3>👥 学生管理</h3>
+                    <button class="btn" onclick="showAddStudentModal()">➕ 添加学生</button>
+                    <div id="students-admin-list">
+                        <!-- 学生管理列表 -->
+                    </div>
+                </div>
+                
+                <!-- 科目管理 -->
+                <div class="admin-section">
+                    <h3>📚 科目管理</h3>
+                    <button class="btn" onclick="showAddSubjectModal()">➕ 添加科目</button>
+                    <div id="subjects-admin-list">
+                        <!-- 科目列表 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加学生模态框 -->
+    <div id="add-student-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加新学生</h3>
+                <button class="close-modal" onclick="closeModal('add-student-modal')">&times;</button>
+            </div>
+            <form id="add-student-form">
+                <div class="form-group">
+                    <label for="student-name">学生姓名</label>
+                    <input type="text" id="student-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="student-avatar">头像 (emoji)</label>
+                    <input type="text" id="student-avatar" value="👦" required>
+                </div>
+                <div class="form-group">
+                    <label for="student-grade">年级</label>
+                    <input type="text" id="student-grade" value="一年级">
+                </div>
+                <div class="form-group">
+                    <label for="student-subjects">选择学科</label>
+                    <div id="student-subjects-checkboxes">
+                        <!-- 学科选择框将通过 JavaScript 动态生成 -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="student-notes">备注</label>
+                    <textarea id="student-notes" placeholder="学生学习特点、注意事项等"></textarea>
+                </div>
+                <div style="text-align: right;">
+                    <button type="button" class="btn secondary" onclick="closeModal('add-student-modal')">取消</button>
+                    <button type="submit" class="btn">添加</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 编辑学生模态框 -->
+    <div id="edit-student-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>编辑学生信息</h3>
+                <button class="close-modal" onclick="closeModal('edit-student-modal')">&times;</button>
+            </div>
+            <form id="edit-student-form">
+                <input type="hidden" id="edit-student-id">
+                <div class="form-group">
+                    <label for="edit-student-name">学生姓名</label>
+                    <input type="text" id="edit-student-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-student-avatar">头像 (emoji)</label>
+                    <input type="text" id="edit-student-avatar" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-student-grade">年级</label>
+                    <input type="text" id="edit-student-grade">
+                </div>
+                <div class="form-group">
+                    <label for="edit-student-subjects">选择学科</label>
+                    <div id="edit-student-subjects-checkboxes">
+                        <!-- 学科选择框将通过 JavaScript 动态生成 -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-student-notes">备注</label>
+                    <textarea id="edit-student-notes" placeholder="学生学习特点、注意事项等"></textarea>
+                </div>
+                <div style="text-align: right;">
+                    <button type="button" class="btn secondary" onclick="closeModal('edit-student-modal')">取消</button>
+                    <button type="submit" class="btn">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 添加科目模态框 -->
+    <div id="add-subject-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加新科目</h3>
+                <button class="close-modal" onclick="closeModal('add-subject-modal')">&times;</button>
+            </div>
+            <form id="add-subject-form">
+                <div class="form-group">
+                    <label for="subject-id">科目ID</label>
+                    <input type="text" id="subject-id" placeholder="例如: music" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject-name">科目名称</label>
+                    <input type="text" id="subject-name" placeholder="例如: 音乐" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject-icon">图标 (emoji)</label>
+                    <input type="text" id="subject-icon" value="📚" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject-color">颜色</label>
+                    <input type="color" id="subject-color" value="#666666">
+                </div>
+                <div class="form-group">
+                    <label for="subject-description">描述</label>
+                    <textarea id="subject-description" placeholder="科目描述"></textarea>
+                </div>
+                <div style="text-align: right;">
+                    <button type="button" class="btn secondary" onclick="closeModal('add-subject-modal')">取消</button>
+                    <button type="submit" class="btn">添加</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 科目任务管理模态框 -->
+    <div id="manage-subject-tasks-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3>科目任务管理</h3>
+                <button class="close-modal" onclick="closeModal('manage-subject-tasks-modal')">&times;</button>
+            </div>
+            <div style="padding: 20px;">
+                <input type="hidden" id="manage-subject-id">
+                <div style="margin-bottom: 20px;">
+                    <h4 id="manage-subject-name">科目名称</h4>
+                    <p id="manage-subject-description" style="color: #666;"></p>
+                </div>
+                
+                <div class="task-management" id="task-management">
+                    <!-- 任务管理内容动态生成 -->
+                </div>
+                
+                <div style="text-align: right; margin-top: 20px;">
+                    <button class="btn" onclick="addNewChapter()">➕ 添加章节</button>
+                    <button class="btn secondary" onclick="closeModal('manage-subject-tasks-modal')">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理入口按钮 -->
+    <div class="admin-entrance">
+        <button class="admin-btn" onclick="showPage('admin-panel')" title="管理面板">
+            ⚙️
+        </button>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

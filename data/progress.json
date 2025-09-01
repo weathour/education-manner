@@ -1,0 +1,200 @@
+{
+  "student_001": {
+    "studentId": "student_001",
+    "subjects": {
+      "math": {
+        "currentLevel": "grade_1",
+        "tasks": {
+          "task_nn_ops": {
+            "status": "in_progress",
+            "currentStep": 0,
+            "stepProgress": [
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              }
+            ],
+            "startedAt": "2025-09-01T09:20:59.687Z"
+          }
+        },
+        "totalProgress": 0
+      }
+    }
+  },
+  "student_002": {
+    "studentId": "student_002",
+    "subjects": {
+      "chinese": {
+        "currentLevel": "grade_1",
+        "tasks": {
+          "task_classical_recite_group1": {
+            "currentStep": 0,
+            "startedAt": "2025-09-01T09:46:20.792Z",
+            "status": "in_progress",
+            "stepProgress": [
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              }
+            ]
+          },
+          "task_poetry_recite_group1": {
+            "currentStep": 12,
+            "startedAt": "2025-09-01T09:44:59.916Z",
+            "status": "completed",
+            "stepProgress": [
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:28.899Z"
+              },
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:30.267Z"
+              },
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:31.106Z"
+              },
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:31.796Z"
+              },
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:32.799Z"
+              },
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:33.738Z"
+              },
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:47.412Z"
+              },
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:48.466Z"
+              },
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:49.649Z"
+              },
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:50.269Z"
+              },
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:51.248Z"
+              },
+              {
+                "completed": true,
+                "completedAt": "2025-09-01T10:11:51.962Z"
+              }
+            ],
+            "completedAt": "2025-09-01T10:11:51.962Z"
+          },
+          "task_writing_structure": {
+            "currentStep": 0,
+            "startedAt": "2025-09-01T09:44:53.522Z",
+            "status": "in_progress",
+            "stepProgress": [
+              {
+                "completed": false,
+                "skipped": true
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              },
+              {
+                "completed": false
+              }
+            ]
+          }
+        },
+        "totalProgress": 0
+      },
+      "math": {
+        "currentLevel": "grade_1",
+        "tasks": {},
+        "totalProgress": 0
+      }
+    }
+  }
+}
